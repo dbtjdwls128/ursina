@@ -35,13 +35,13 @@ class Warp(Entity):
         )      
         self.a = player
 
-        def update(self):
-            self.abcd()
+    def update(self):
+        self.abcd()
 
 
-        def abcd(self): 
-            if self.warp.intersects(a):
-                self.a.position = (95, 3, 90)
+    def abcd(self): 
+        if self.warp.intersects(player):
+            self.a.position = (95, 3, 90)
 
 
 
