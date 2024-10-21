@@ -18,8 +18,33 @@ class Player(FirstPersonController):
         speed = 10,
         model = 'cube',
         collider = 'mesh',
-        scale = 1
+        scale = 1,
+        position = (0,0,0)
         )
+
+class Warp(Entity):
+    def __init__(self, x, y):
+        super().__init__(
+            warp = Entity(
+             model = 'cube', 
+                scale = (5, 5, 5,),
+                position = (x * 5, 1, y * 5),
+                colluder = 'box',
+                texture = 'stone_wall_04_diff_4k.jpg'  
+            )
+        )      
+        self.a = player
+
+        def update(self):
+            self.abcd()
+
+
+        def abcd(self): 
+            if self.warp.intersects(a):
+                self.a.position = (95, 3, 90)
+
+
+
 
 
 
@@ -69,7 +94,7 @@ MAP = [
     [11,__,13,14,15,__,__,18,__,__,21,22,23,24,25,26,27,28,__,__,31,32,__,33,__,__,__,33],
     [11,__,13,14,__,__,17,18,19,__,21,22,23,24,25,26,27,28,29,__,__,__,__,__,__,33,__,33],
     [11,__,__,__,__,16,17,18,19,__,21,__,__,__,__,__,__,__,__,__,31,32,33,33,22,33,__,33],
-    [11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,33,22,33,'ew',33]
+    [11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,33,22,33,'e',33]
 
     ]
 
@@ -80,7 +105,11 @@ for i in range( len (MAP) ):
             continue
             
         if MAP[i][j] == 'e':
-            exitdoor = Exit (i,j)
+            exitdoor = Exit (i,j),
+            continue
+
+        if MAP[i][j] =='w':
+            warp = warp (i, j),
             continue
 
         if MAP[i][j]:
@@ -90,8 +119,10 @@ for i in range( len (MAP) ):
                 scale = (5, 5, 5,),
                 position = (i * 5, 1, j * 5),
                 colluder = 'box',
-                texture = 'stone_wall_04_diff_4k.jpg'
-                )
+                texture = 'stone_wall_04_diff_4k.jpg'            
+                
+                
+                ) 
 
 
 
