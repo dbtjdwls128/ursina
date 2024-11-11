@@ -26,25 +26,38 @@ class Warp(Entity):
     def __init__(self, x, y):
         super().__init__(
             warp = Entity(
-             model = 'cube', 
+                model = 'cube', 
                 scale = (5, 5, 5,),
                 position = (x * 5, 1, y * 5),
-                colluder = 'box',
-                texture = 'stone_wall_04_diff_4k.jpg'  
+                collider = 'box',
+                texture = '=brick'  
             )
         )      
-        self.a = player
+        self.player = player
 
     def update(self):
         self.abcd()
 
 
     def abcd(self): 
-        if self.warp.intersects(player):
+        if self.warp.intersects(self.player):
             self.a.position = (95, 3, 90)
 
 
-
+class coin(Entity):
+    def __init__(self, x, z):
+        super().__init__(
+                model = 'circle',
+                color = color.yellow,
+                scale = (10, 10, 10),
+                position = (x * 5, 0, z * 5),
+                double_sided = True,
+                collider = 'box'
+                
+        )
+    def update(self):
+        self.coin.rotation_y += 1
+        if self.intersects(player):
 
 
 
@@ -82,7 +95,7 @@ def input(key):
 
 
 MAP = [
-    [11,'p',13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,33,22,33,22,33],
+    [11,'e',13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,33,22,33,22,33],
     [11,__,13,14,__,16,__,18,19,20,21,22,__,24,25,26,27,28,29,__,__,__,__,33,22,33,22,33],
     [11,__,13,__,__,16,__,__,__,20,21,22,__,24,25,26,27,28,29,__,31,32,__,__,__,__,__,33],
     [11,__,13,__,15,16,__,18,__,20,__,22,__,__,__,__,__,__,29,__,31,32,33,33,22,33,__,33],
@@ -94,9 +107,11 @@ MAP = [
     [11,__,13,14,15,__,__,18,__,__,21,22,23,24,25,26,27,28,__,__,31,32,__,33,__,__,__,33],
     [11,__,13,14,__,__,17,18,19,__,21,22,23,24,25,26,27,28,29,__,__,__,__,__,__,33,__,33],
     [11,__,__,__,__,16,17,18,19,__,21,__,__,__,__,__,__,__,__,__,31,32,33,33,22,33,__,33],
-    [11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,33,22,33,'e',33]
+    [11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,33,22,33,'p',33]
 
     ]
+
+walls = []
 
 for i in range( len (MAP) ):
     for j in range(len ( MAP [i] ) ):
@@ -109,7 +124,7 @@ for i in range( len (MAP) ):
             continue
 
         if MAP[i][j] =='w':
-            warp = warp (i, j),
+            warpgate = warp (i, j),
             continue
 
         if MAP[i][j]:
@@ -118,21 +133,25 @@ for i in range( len (MAP) ):
                 #color = color.blue,
                 scale = (5, 5, 5,),
                 position = (i * 5, 1, j * 5),
-                colluder = 'box',
-                texture = 'stone_wall_04_diff_4k.jpg'            
-                
-                
-                ) 
+                collider = 'box',
+                texture = 'brick'            
+        ) 
+        walls.append(wall)
+    else:
+       coin = coin()
 
 
 
 
-ground = Entity (
+ground = Entity(
 model = 'plane',
 color = color.gray,
 position = (0, 0, 0),
 scale = (500, 1, 500),
-collider = 'mesh'
+collider = 'mesh',
+texture = 'grass'
 )
+
+Sky(texture = 'sky_sunset')
 
 app.run()
